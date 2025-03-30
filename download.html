@@ -1,0 +1,497 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Download Music Player App | MusicPlayer</title>
+    <style>
+        :root {
+            --primary-color: #1DB954;
+            --background-dark: #121212;
+            --surface-dark: #181818;
+            --text-primary: #ffffff;
+            --text-secondary: #b3b3b3;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', sans-serif;
+        }
+
+        body {
+            background: var(--background-dark);
+            color: var(--text-primary);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* Header */
+        header {
+            padding: 1rem;
+            background: var(--surface-dark);
+            box-shadow: 0 2px 10px rgba(0,0,0,0.3);
+            display: flex;
+            align-items: center;
+        }
+
+        .logo-container {
+            display: flex;
+            align-items: center;
+        }
+
+        .logo {
+            width: 40px;
+            height: auto;
+            margin-right: 0rem;
+        }
+
+        .logo-text {
+            font-size: 1rem;
+            font-weight: bold;
+            color: var(--text-primary);
+        }
+
+        /* Main Container */
+        .container {
+            max-width: 1200px;
+            margin: 2rem auto;
+            padding: 0 1.5rem;
+            flex: 1;
+            text-align: center;
+        }
+
+        /* Hero Section */
+        .download-hero {
+            margin-bottom: 3rem;
+        }
+
+        .download-hero h1 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            color: var(--primary-color);
+        }
+
+        .download-hero p {
+            font-size: 1.2rem;
+            color: var(--text-secondary);
+            max-width: 700px;
+            margin: 0 auto 2rem;
+        }
+
+        /* Download Button */
+        .download-btn {
+            display: inline-block;
+            background: var(--primary-color);
+            color: white;
+            padding: 1rem 2rem;
+            border-radius: 30px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 1.2rem;
+            transition: all 0.3s ease;
+            margin: 1rem 0;
+        }
+
+        .download-btn:hover {
+            background: #1ED760;
+            transform: scale(1.05);
+            box-shadow: 0 5px 15px rgba(29, 185, 84, 0.4);
+        }
+
+        .download-btn i {
+            margin-right: 10px;
+        }
+
+        /* App Info */
+        .app-info {
+            background: var(--surface-dark);
+            border-radius: 10px;
+            padding: 2rem;
+            max-width: 800px;
+            margin: 2rem auto;
+            text-align: left;
+        }
+
+        .app-info h3 {
+            color: var(--primary-color);
+            margin-bottom: 1rem;
+            font-size: 1.5rem;
+        }
+
+        .app-info ul {
+            list-style-type: none;
+            padding-left: 0;
+        }
+
+        .app-info li {
+            margin-bottom: 0.8rem;
+            color: var(--text-secondary);
+            line-height: 1.6;
+        }
+
+        .app-info li i {
+            color: var(--primary-color);
+            margin-right: 10px;
+            width: 20px;
+            text-align: center;
+        }
+
+        .feature-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+            margin-top: 2rem;
+        }
+
+        .feature-card {
+            background: rgba(30, 30, 30, 0.5);
+            border-radius: 8px;
+            padding: 1.5rem;
+            transition: transform 0.3s ease;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-5px);
+            background: rgba(40, 40, 40, 0.7);
+        }
+
+        .feature-card h4 {
+            color: var(--primary-color);
+            margin-bottom: 0.8rem;
+            font-size: 1.2rem;
+        }
+
+        .feature-card p {
+            color: var(--text-secondary);
+            font-size: 0.95rem;
+        }
+
+        .feature-icon {
+            font-size: 2rem;
+            margin-bottom: 1rem;
+            color: var(--primary-color);
+        }
+
+        .section-title {
+            color: var(--primary-color);
+            font-size: 2rem;
+            margin: 3rem 0 1.5rem;
+            text-align: center;
+        }
+
+        /* FAQ Section */
+        .faq-item {
+            margin-bottom: 1.5rem;
+            border-bottom: 1px solid #333;
+            padding-bottom: 1.5rem;
+        }
+
+        .faq-question {
+            color: var(--text-primary);
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .faq-answer {
+            color: var(--text-secondary);
+            line-height: 1.6;
+        }
+
+        /* Footer */
+        footer {
+            background: var(--surface-dark);
+            padding: 2rem;
+            text-align: center;
+            margin-top: auto;
+        }
+
+        footer a {
+            color: var(--primary-color);
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .download-hero h1 {
+                font-size: 2rem;
+            }
+            .download-hero p {
+                font-size: 1rem;
+            }
+            .download-btn {
+                padding: 0.8rem 1.5rem;
+                font-size: 1rem;
+            }
+            .feature-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+        header {
+        padding: 1rem 2rem;
+        display: flex;
+        align-items: center;
+        gap: 3rem;
+    }
+
+    .logo-container {
+        flex-shrink: 0; /* Prevent logo from shrinking */
+    }
+
+    .main-nav {
+        flex: 1;
+    }
+
+    .main-nav ul {
+        display: flex;
+        gap: 1rem;
+        list-style: none;
+        margin: 0;
+        padding: 0;
+    }
+
+    .main-nav a {
+        color: var(--text-secondary);
+        text-decoration: none;
+        font-weight: 500;
+        padding: 0.1rem;
+        transition: all 0.3s ease;
+    }
+
+    .main-nav a:hover {
+        color: var(--primary-color);
+    }
+
+    /* Responsive Design */
+    @media (max-width: 1024px) {
+        header {
+            gap: 1rem;
+        }
+        
+        .main-nav ul {
+            gap: 1rem;
+        }
+    }
+
+    @media (max-width: 768px) {
+        header {
+            flex-wrap: wrap;
+            gap: 1.5rem;
+            padding: 1rem;
+        }
+
+        .main-nav {
+            width:90%;
+        }
+
+        .main-nav ul {
+            flex-wrap: wrap;
+            gap: .9rem;
+            justify-content: flex-start;
+        }
+    }
+
+    @media (max-width: 480px) {
+        .main-nav a {
+            font-size: 0.8rem;
+            padding: 0.5rem 0.25rem;
+        }
+    }
+    </style>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+      <header>
+    <div class="logo-container">
+        <img src="/image /logo.png.png" alt="Logo" class="logo">
+        <span class="logo-text">Lotify</span>
+    </div>
+    
+    <nav class="main-nav">
+        <ul>
+            
+            <li><a href="index.html">Home</a></li>
+            <li><a href="support.html">Support</a></li>
+            <li><a href="privacy policy.html">Privacy</a></li>
+            <li><a href="term of service.html">Terms</a></li>
+        </ul>
+    </nav>
+</header>
+
+    <div class="container">
+        <!-- Hero Section -->
+        <section class="download-hero">
+            <h1>Download MusicPlayer App</h1>
+            <p>Experience music like never before with our premium quality audio player. Streamline your listening experience with intuitive controls, stunning visuals, and powerful features designed for true music lovers.</p>
+            
+            <!-- Direct APK Download Button -->
+            <a href="MusicPlayer.apk" class="download-btn" download>
+                <i class="fas fa-download"></i> Download APK (25 MB)
+            </a>
+            
+            <p>Version 1.0.0 | Requires Android 8.0+</p>
+        </section>
+
+        <!-- App Features -->
+        <section class="app-info">
+            <h3>Why Choose MusicPlayer?</h3>
+            <p>MusicPlayer isn't just another music app - it's a complete audio experience designed with both casual listeners and audiophiles in mind. Here's what makes us stand out:</p>
+            
+            <div class="feature-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-music"></i>
+                    </div>
+                    <h4>Advanced Audio Engine</h4>
+                    <p>Enjoy crystal clear sound with our optimized audio processing that supports all major formats including MP3, FLAC, WAV, and AAC with 32-bit/384kHz playback capability.</p>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-sliders-h"></i>
+                    </div>
+                    <h4>Customizable Equalizer</h4>
+                    <p>Fine-tune your listening experience with our 10-band professional equalizer, bass boost, and 3D surround sound virtualization.</p>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-moon"></i>
+                    </div>
+                    <h4>Dark/Light Themes</h4>
+                    <p>Switch between eye-friendly dark mode and crisp light mode with automatic scheduling based on time of day or sunrise/sunset.</p>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-bolt"></i>
+                    </div>
+                    <h4>Optimized Performance</h4>
+                    <p>Lightweight design consumes minimal battery while delivering maximum performance, even with large music libraries.</p>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-cloud"></i>
+                    </div>
+                    <h4>Cloud Sync</h4>
+                    <p>Sync your playlists and preferences across multiple devices with our optional cloud backup service.</p>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-headphones"></i>
+                    </div>
+                    <h4>Bluetooth Support</h4>
+                    <p>Enhanced support for Bluetooth devices with LDAC, aptX HD, and AAC codecs for high-quality wireless audio.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Detailed Features -->
+        <section class="app-info">
+            <h3>Complete Feature List</h3>
+            <ul>
+                <li><i class="fas fa-check"></i> <strong>Smart Playlists:</strong> Auto-generated playlists based on your listening habits, mood, or activity</li>
+                <li><i class="fas fa-check"></i> <strong>Sleep Timer:</strong> Set the app to automatically stop playback after a set duration</li>
+                <li><i class="fas fa-check"></i> <strong>Crossfade:</strong> Smooth transitions between tracks with adjustable duration</li>
+                <li><i class="fas fa-check"></i> <strong>Gapless Playback:</strong> Perfect for live albums and classical music with no gaps between tracks</li>
+                <li><i class="fas fa-check"></i> <strong>Lyrics Support:</strong> Display synchronized lyrics when available (supports LRC files)</li>
+                <li><i class="fas fa-check"></i> <strong>Folder Browser:</strong> Directly browse and play music from your device folders</li>
+                <li><i class="fas fa-check"></i> <strong>Tag Editor:</strong> Edit metadata directly within the app</li>
+                <li><i class="fas fa-check"></i> <strong>Chromecast Support:</strong> Stream your music to compatible devices</li>
+                <li><i class="fas fa-check"></i> <strong>Last.fm Scrobbling:</strong> Track your listening history</li>
+                <li><i class="fas fa-check"></i> <strong>Widget Support:</strong> Control playback from your home screen</li>
+                <li><i class="fas fa-check"></i> <strong>Android Auto:</strong> Full support for in-car entertainment systems</li>
+                <li><i class="fas fa-check"></i> <strong>Material You:</strong> Dynamic theming on supported Android versions</li>
+            </ul>
+        </section>
+
+        <!-- System Requirements -->
+        <section class="app-info">
+            <h3>System Requirements</h3>
+            <ul>
+                <li><i class="fas fa-mobile-alt"></i> <strong>Operating System:</strong> Android 8.0 (Oreo) or higher</li>
+                <li><i class="fas fa-microchip"></i> <strong>Processor:</strong> ARMv7, ARM64, x86, or x86_64</li>
+                <li><i class="fas fa-memory"></i> <strong>RAM:</strong> Minimum 2GB recommended for optimal performance</li>
+                <li><i class="fas fa-hdd"></i> <strong>Storage:</strong> 50MB for app + space for your music library</li>
+                <li><i class="fas fa-headphones"></i> <strong>Audio:</strong> Supports standard 3.5mm jack, USB audio, and Bluetooth</li>
+                <li><i class="fas fa-percentage"></i> <strong>Screen Resolution:</strong> Optimized for all resolutions from HD to 4K</li>
+            </ul>
+        </section>
+
+        <!-- Installation Instructions -->
+        <section class="app-info">
+            <h3>Installation Guide</h3>
+            <ol>
+                <li><strong>Download the APK file</strong> using the button above</li>
+                <li>Open your device's <strong>Settings</strong> > <strong>Security</strong></li>
+                <li>Enable <strong>Unknown Sources</strong> to allow installation of apps outside the Play Store</li>
+                <li>Open the downloaded APK file and tap <strong>Install</strong></li>
+                <li>Once installed, open the app and grant necessary permissions</li>
+                <li>The app will automatically scan your device for music files</li>
+                <li>Start enjoying your music collection!</li>
+            </ol>
+            <p style="margin-top: 1rem;"><i class="fas fa-exclamation-triangle" style="color: #ffcc00;"></i> Note: If you encounter any issues during installation, ensure you have sufficient storage space and try again.</p>
+        </section>
+
+        <!-- FAQ Section -->
+        <h2 class="section-title">Frequently Asked Questions</h2>
+        <section class="app-info">
+            <div class="faq-item">
+                <div class="faq-question">Is MusicPlayer free to use? <i class="fas fa-chevron-down"></i></div>
+                <div class="faq-answer">Yes, MusicPlayer is completely free with no hidden subscriptions or in-app purchases. All features are available without any limitations.</div>
+            </div>
+            
+            <div class="faq-item">
+                <div class="faq-question">Does the app contain ads? <i class="fas fa-chevron-down"></i></div>
+                <div class="faq-answer">No, MusicPlayer is ad-free. We believe in providing an uninterrupted music experience.</div>
+            </div>
+            
+            <div class="faq-item">
+                <div class="faq-question">How do I transfer my playlists from another music player? <i class="fas fa-chevron-down"></i></div>
+                <div class="faq-answer">You can export playlists as M3U files from most music players and import them into MusicPlayer via the Playlists section.</div>
+            </div>
+            
+            <div class="faq-item">
+                <div class="faq-question">Does MusicPlayer support streaming services? <i class="fas fa-chevron-down"></i></div>
+                <div class="faq-answer">Currently, MusicPlayer is designed for local music playback. We may add streaming service integration in future updates.</div>
+            </div>
+            
+            <div class="faq-item">
+                <div class="faq-question">Can I request new features? <i class="fas fa-chevron-down"></i></div>
+                <div class="faq-answer">Absolutely! We welcome feature requests through our support page. Popular requests are prioritized for future updates.</div>
+            </div>
+        </section>
+
+        <!-- Update Information -->
+        <section class="app-info">
+            <h3>What's New in Version 1.0.0</h3>
+            <ul>
+                <li><i class="fas fa-star"></i> Initial release with all core features</li>
+                <li><i class="fas fa-star"></i> Optimized for Android 8.0 through Android 13</li>
+                <li><i class="fas fa-star"></i> Material You dynamic theming support</li>
+                <li><i class="fas fa-star"></i> Enhanced equalizer with presets</li>
+                <li><i class="fas fa-star"></i> Improved battery efficiency</li>
+            </ul>
+            <p style="margin-top: 1rem;">We're constantly working to improve MusicPlayer. Expect regular updates with new features and performance enhancements.</p>
+        </section>
+    </div>
+
+    <footer>
+    <div class="footer-content">
+        <div class="footer-section">
+            <p class="copyright">&copy; 2023 Rohit Prasad Yadav</p>
+            <p class="license">Licensed under <a href="/LICENCE .txt ">MIT License</a></p>
+        </div>
+    </div>
+</footer>
+</body>
+</html>

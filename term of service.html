@@ -1,0 +1,329 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Terms of Service - MusicPlayer</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary-color: #1DB954;
+            --background-dark: #121212;
+            --surface-dark: #181818;
+            --text-primary: #ffffff;
+            --text-secondary: #b3b3b3;
+            --support-color: #4BDF80;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', sans-serif;
+        }
+
+        body {
+            background: var(--background-dark);
+            color: var(--text-primary);
+            line-height: 1.6;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* Header with Navigation */
+        header {
+            padding: 1rem 2rem;
+            background: var(--surface-dark);
+            display: flex;
+            align-items: center;
+            gap: 3rem;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.3);
+        }
+
+        .logo-container {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            flex-shrink: 0;
+        }
+
+        .logo {
+            height: 50px;
+            width: auto;
+        }
+
+        .logo-text {
+            font-weight: bold;
+            font-size: 1.4rem;
+            background: linear-gradient(to right, #1DB954, #1ED760);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .main-nav {
+            flex: 1;
+        }
+
+        .main-nav ul {
+            display: flex;
+            gap: 2rem;
+            list-style: none;
+            margin: 0;
+            padding: 0;
+        }
+
+        .main-nav a {
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-weight: 500;
+            padding: 0.5rem 0;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .main-nav a:hover {
+            color: var(--primary-color);
+        }
+
+        .main-nav a.active {
+            color: var(--primary-color);
+        }
+
+        .main-nav a.active::after {
+            content: '';
+            position: absolute;
+            bottom: -8px;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background: var(--primary-color);
+        }
+
+        /* Terms Content */
+        .terms-container {
+            max-width: 800px;
+            margin: 2rem auto;
+            padding: 2rem;
+            flex: 1;
+        }
+
+        h1, h2, h3 {
+            color: var(--primary-color);
+            margin: 1.5rem 0;
+        }
+
+        h1 {
+            font-size: 2rem;
+            border-bottom: 2px solid var(--primary-color);
+            padding-bottom: 0.5rem;
+        }
+
+        h2 {
+            font-size: 1.5rem;
+            margin-top: 2rem;
+        }
+
+        h3 {
+            font-size: 1.2rem;
+        }
+
+        p, li {
+            margin-bottom: 1rem;
+        }
+
+        ul {
+            padding-left: 2rem;
+        }
+
+        li {
+            margin-bottom: 0.5rem;
+        }
+
+        a {
+            color: var(--support-color);
+            text-decoration: none;
+        }
+
+        a:hover {
+            text-decoration: underline;
+        }
+
+        .last-updated {
+            color: var(--text-secondary);
+            font-style: italic;
+            margin-bottom: 2rem;
+            display: block;
+        }
+
+        /* Footer */
+        footer {
+            background: var(--surface-dark);
+            padding: 1.5rem;
+            text-align: center;
+            margin-top: auto;
+            border-top: 1px solid #282828;
+        }
+
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            margin-bottom: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .footer-links a {
+            color: var(--text-secondary);
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .footer-links a:hover {
+            color: var(--primary-color);
+        }
+
+        .copyright {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 1024px) {
+            header {
+                gap: 1.5rem;
+            }
+            
+            .main-nav ul {
+                gap: 1.5rem;
+            }
+        }
+
+        @media (max-width: 768px) {
+            header {
+                flex-wrap: wrap;
+                gap: 1rem;
+                padding: 1rem;
+            }
+
+            .main-nav {
+                width: 100%;
+            }
+
+            .main-nav ul {
+                flex-wrap: wrap;
+                gap: 1rem;
+                justify-content: center;
+            }
+
+            .terms-container {
+                padding: 1.5rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .logo-text {
+                font-size: 1.2rem;
+            }
+
+            .main-nav a {
+                font-size: 0.9rem;
+            }
+
+            .terms-container {
+                padding: 1rem;
+            }
+
+            h1 {
+                font-size: 1.7rem;
+            }
+
+            .footer-links {
+                gap: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="logo-container">
+            <img src="/image /logo.png.png" alt="MusicPlayer Logo" class="logo">
+            <span class="logo-text">Lotify</span>
+        </div>
+        
+        <nav class="main-nav">
+            <ul>
+                <li><a href="index.html">Home</a></li>
+                <li><a href="support.html">Support</a></li>
+                <li><a href="privacy policy.html">Privacy</a></li>
+                <li><a href="download.html" class="active">App</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <div class="terms-container">
+        <h1>Terms of Service</h1>
+        <span class="last-updated">Last Updated: June 30, 2025</span>
+
+        <h2>1. Acceptance of Terms</h2>
+        <p>By accessing or using MusicPlayer ("the Service"), you agree to be bound by these Terms of Service. If you do not agree to all terms, you may not use the Service.</p>
+
+        <h2>2. Description of Service</h2>
+        <p>MusicPlayer provides a digital music streaming service that allows users to discover, play, and organize music content.</p>
+
+        <h2>3. User Responsibilities</h2>
+        <ul>
+            <li>You must be at least 13 years old to use the Service</li>
+            <li>You are responsible for maintaining the confidentiality of your account credentials</li>
+            <li>You agree not to use the Service for any illegal or unauthorized purpose</li>
+            <li>You will not modify, adapt, or hack the Service or modify another website to falsely imply it is associated with MusicPlayer</li>
+        </ul>
+
+        <h2>4. Account Terms</h2>
+        <ul>
+            <li>You must provide accurate and complete registration information</li>
+            <li>You are responsible for all activity that occurs under your account</li>
+            <li>You must notify us immediately of any unauthorized use of your account</li>
+            <li>We reserve the right to refuse service to anyone for any reason at any time</li>
+        </ul>
+
+        <h2>5. Subscription and Payments</h2>
+        <ul>
+            <li>Premium features require payment of subscription fees</li>
+            <li>All fees are non-refundable except as required by law</li>
+            <li>We may change subscription fees at any time with 30 days notice</li>
+            <li>Your subscription will automatically renew unless canceled</li>
+        </ul>
+
+        <h2>6. Intellectual Property</h2>
+        <p>The Service and its original content, features, and functionality are owned by MusicPlayer and are protected by international copyright, trademark, patent, trade secret, and other intellectual property or proprietary rights laws.</p>
+
+        <h2>7. Termination</h2>
+        <p>We may terminate or suspend access to our Service immediately, without prior notice or liability, for any reason whatsoever, including without limitation if you breach the Terms. All provisions of the Terms which by their nature should survive termination shall survive termination.</p>
+
+        <h2>8. Disclaimer of Warranties</h2>
+        <p>Your use of the Service is at your sole risk. The Service is provided "AS IS" and "AS AVAILABLE" without warranties of any kind, either express or implied, including but not limited to implied warranties of merchantability, fitness for a particular purpose, or non-infringement.</p>
+
+        <h2>9. Limitation of Liability</h2>
+        <p>In no event shall MusicPlayer, nor its directors, employees, partners, agents, suppliers, or affiliates, be liable for any indirect, incidental, special, consequential or punitive damages, including without limitation, loss of profits, data, use, goodwill, or other intangible losses, resulting from your access to or use of or inability to access or use the Service.</p>
+
+        <h2>10. Governing Law</h2>
+        <p>These Terms shall be governed and construed in accordance with the laws of California, United States, without regard to its conflict of law provisions.</p>
+
+        <h2>11. Changes to Terms</h2>
+        <p>We reserve the right, at our sole discretion, to modify or replace these Terms at any time. We will provide at least 30 days notice prior to any new terms taking effect. What constitutes a material change will be determined at our sole discretion.</p>
+
+        <h2>12. Contact Information</h2>
+        <p>Questions about the Terms of Service should be sent to <a href="mailto: rohitprasadyadav06@gmail.com">rohitprasadyadav06@gmail.com</a>.</p>
+    </div>
+
+    <footer>
+        <div class="footer-links">
+            <a href="support.html">Support</a>
+            <a href="privacy.html">Privacy Policy</a>
+            <a href="terms.html">Terms of Service</a>
+        </div>
+        <p class="copyright">© 2025 MusicPlayer. All rights reserved.</p>
+    </footer>
+</body>
+</html>

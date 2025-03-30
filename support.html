@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>UPI Payment Support</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Arial', sans-serif;
+        }
+
+        body {
+            line-height: 1.6;
+            background-color: #f5f5f5;
+            color: #333;
+        }
+
+        .header {
+            background: #007bff;
+            color: white;
+            padding: 1rem;
+            text-align: center;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+
+        .header a {
+            color: white;
+            text-decoration: none;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        .upi-section, .social-section, .faq-section {
+            background: white;
+            padding: 2rem;
+            border-radius: 10px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            margin-bottom: 2rem;
+        }
+
+        h2 {
+            color: #007bff;
+            margin-bottom: 1rem;
+            border-bottom: 2px solid #f0f0f0;
+            padding-bottom: 0.5rem;
+        }
+
+        .upi-steps {
+            display: flex;
+            justify-content: space-around;
+            flex-wrap: wrap;
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .step {
+            flex: 1;
+            min-width: 250px;
+            text-align: center;
+            padding: 1rem;
+            transition: transform 0.3s;
+        }
+
+        .step:hover {
+            transform: translateY(-5px);
+        }
+
+        .step i {
+            font-size: 2.5rem;
+            color: #007bff;
+            margin-bottom: 1rem;
+        }
+
+        .qr-code {
+            width: 150px;
+            height: 150px;
+            margin: 1rem auto;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 1px solid #eee;
+        }
+
+        .qr-code img {
+            max-width: 100%;
+            max-height: 100%;
+        }
+
+        .social-links {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .social-links a {
+            font-size: 2rem;
+            color: #007bff;
+            transition: all 0.3s;
+            width: 50px;
+            height: 50px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+        }
+
+        .social-links a:hover {
+            color: white;
+            background-color: #007bff;
+            transform: scale(1.1);
+        }
+
+        .faq-item {
+            margin: 1.5rem 0;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            overflow: hidden;
+        }
+
+        .faq-question {
+            padding: 1rem;
+            background: #f8f9fa;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-weight: 600;
+        }
+
+        .faq-question:hover {
+            background: #e9ecef;
+        }
+
+        .faq-answer {
+            padding: 0 1rem;
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease-out;
+            background: white;
+        }
+
+        .footer {
+            background: #333;
+            color: white;
+            text-align: center;
+            padding: 1.5rem;
+            margin-top: 2rem;
+        }
+
+        .upi-id {
+            text-align: center;
+            margin: 1rem 0;
+            font-size: 1.2rem;
+            font-weight: bold;
+            color: #28a745;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 1rem;
+            }
+
+            .upi-steps {
+                flex-direction: column;
+                gap: 1rem;
+            }
+
+            .step {
+                margin-bottom: 1rem;
+            }
+
+            .social-links {
+                gap: 1.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <a href="index.html">
+            <h1>Contribute Through UPI</h1>
+        </a>
+        
+            <a href="index.html" class="support-link">
+      
+       <i class="fas fa-arrow-left"</i>Back to main website 
+    </a>
+    </a>
+    </header>
+
+    <div class="container">
+        <section class="upi-section">
+            <h2>Make Payment Using UPI</h2>
+            <div class="upi-id">
+                UPI ID: 8389873317@fam
+            </div>
+            <div class="upi-steps">
+                <div class="step">
+                    <i class="fas fa-mobile-alt"></i>
+                    <h3>Step 1</h3>
+                    <p>Open any UPI enabled banking app on your phone</p>
+                </div>
+                <div class="step">
+                    <i class="fas fa-qrcode"></i>
+                    <h3>Step 2</h3>
+                    <p>Scan this QR code or enter UPI ID manually</p>
+                    <div class="qr-code">
+                        <img src="/image /20250328_124123.png" alt="UPI QR Code">
+                    </div>
+                </div>
+                <div class="step">
+                    <i class="fas fa-rupee-sign"></i>
+                    <h3>Step 3</h3>
+                    <p>Enter amount and complete payment</p>
+                </div>
+            </div>
+        </section>
+
+        <section class="social-section">
+            <h2>Connect With Us</h2>
+            <div class="social-links">
+                <a href="https://instagram.com/with_rohiit" target="_blank" rel="noopener noreferrer" aria-label="Instagram">
+                    <i class="fab fa-instagram"></i>
+                </a>
+                <a href="https://github.com/rpy2006" target="_blank" rel="noopener noreferrer" aria-label="GitHub">
+                    <i class="fab fa-github"></i>
+                </a>
+                <a href="mailto:rohitprasadyadav06@gmail.com" aria-label="Email">
+                    <i class="fas fa-envelope"></i>
+                </a>
+            </div>
+        </section>
+
+        <section class="faq-section">
+            <h2>Frequently Asked Questions</h2>
+            <div class="faq-item">
+                <div class="faq-question" onclick="toggleAnswer(this)">
+                    <span>How do I make a payment using UPI?</span>
+                    <i class="fas fa-chevron-down"></i>
+                </div>
+                <div class="faq-answer">
+                    <p>Open any UPI-enabled app, scan the QR code or enter our UPI ID (8389873317@fam), input the amount, and confirm the payment. The transaction is usually instant.</p>
+                </div>
+            </div>
+            <div class="faq-item">
+                <div class="faq-question" onclick="toggleAnswer(this)">
+                    <span>Is there any transaction fee?</span>
+                    <i class="fas fa-chevron-down"></i>
+                </div>
+                <div class="faq-answer">
+                    <p>No, we don't charge any fees. However, your bank might have transaction limits or charges depending on your account type.</p>
+                </div>
+            </div>
+            <div class="faq-item">
+                <div class="faq-question" onclick="toggleAnswer(this)">
+                    <span>How long does payment processing take?</span>
+                    <i class="fas fa-chevron-down"></i>
+                </div>
+                <div class="faq-answer">
+                    <p>UPI payments are typically processed instantly. In rare cases, it may take up to 24 hours if there are network issues.</p>
+                </div>
+            </div>
+            <div class="faq-item">
+                <div class="faq-question" onclick="toggleAnswer(this)">
+                    <span>What if my payment fails?</span>
+                    <i class="fas fa-chevron-down"></i>
+                </div>
+                <div class="faq-answer">
+                    <p>Check your bank account to confirm if the amount was deducted. If deducted but not received by us, contact your bank and share the transaction details with our support team at rohitprasadyadav06@gmail.com.</p>
+                </div>
+            </div>
+            <div class="faq-item">
+                <div class="faq-question" onclick="toggleAnswer(this)">
+                    <span>How can I contact support?</span>
+                    <i class="fas fa-chevron-down"></i>
+                </div>
+                <div class="faq-answer">
+                    <p>You can email us at rohitprasadyadav06@gmail.com or message us on Instagram @with_rohiit. We typically respond within 24 hours.</p>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <footer class="footer">
+        <p>&copy; 2025 Rohit Prasad Yadav. All rights reserved.</p>
+    </footer>
+
+    <script>
+        function toggleAnswer(element) {
+            const answer = element.nextElementSibling;
+            const icon = element.querySelector('i');
+            
+            // Close all other open FAQs
+            document.querySelectorAll('.faq-answer').forEach(item => {
+                if (item !== answer && item.style.maxHeight) {
+                    item.style.maxHeight = null;
+                    const otherIcon = item.previousElementSibling.querySelector('i');
+                    otherIcon.style.transform = 'rotate(0deg)';
+                }
+            });
+
+            // Toggle current FAQ
+            answer.style.maxHeight = answer.style.maxHeight ? null : answer.scrollHeight + "px";
+            icon.style.transform = answer.style.maxHeight ? 'rotate(180deg)' : 'rotate(0deg)';
+        }
+
+        // Open first FAQ by default
+        document.addEventListener('DOMContentLoaded', function() {
+            const firstFAQ = document.querySelector('.faq-question');
+            if (firstFAQ) {
+                firstFAQ.click();
+            }
+        });
+    </script>
+</body>
+</html>
