@@ -1,69 +1,186 @@
-// player.js
+// script.js
 document.addEventListener('DOMContentLoaded', function() {
     // DOM Elements
-    const audioPlayer = document.getElementById('audio-player');
-    const playPauseBtn = document.getElementById('play-pause');
-    const prevBtn = document.getElementById('prev');
-    const nextBtn = document.getElementById('next');
-    const progressBar = document.getElementById('progress-bar');
-    const currentTimeEl = document.getElementById('current-time');
-    const durationEl = document.getElementById('duration');
-    const volumeControl = document.getElementById('volume');
-    const songTitle = document.getElementById('song-title');
-    const songArtist = document.getElementById('song-artist');
-    const albumArt = document.getElementById('album-art');
-    const playlistContainer = document.getElementById('playlist');
-    const shuffleBtn = document.getElementById('shuffle');
-    const repeatBtn = document.getElementById('repeat');
-    
+    const audioPlayer = new Audio();
+    const playBtn = document.querySelector('.play-btn');
+    const prevBtn = document.querySelector('.prev-btn');
+    const nextBtn = document.querySelector('.next-btn');
+    const shuffleBtn = document.querySelector('.shuffle-btn');
+    const repeatBtn = document.querySelector('.repeat-btn');
+    const progressBar = document.querySelector('.progress-bar');
+    const currentTimeEl = document.querySelector('.current-time');
+    const durationEl = document.querySelector('.duration');
+    const nowPlayingCover = document.querySelector('.now-playing-cover');
+    const nowPlayingTitle = document.querySelector('.now-playing-title');
+    const nowPlayingArtist = document.querySelector('.now-playing-artist');
+    const homePlaylist = document.getElementById('home-playlist');
+    const fullPlaylist = document.getElementById('full-playlist');
+    const searchResults = document.getElementById('search-results');
+    const searchBar = document.querySelector('.search-bar');
+    const navItems = document.querySelectorAll('.nav-item');
+    const sections = document.querySelectorAll('.section');
+    const visualizerCanvas = document.getElementById('audioVisualizer');
+    const visualizerCtx = visualizerCanvas.getContext('2d');
+
     // Player state
     let currentSongIndex = 0;
     let isPlaying = false;
     let isShuffled = false;
     let isRepeat = false;
-    let originalPlaylist = [...songs];
     let shuffledPlaylist = [];
-    
+    let audioContext;
+    let analyser;
+    let dataArray;
+    let animationId;
+
     // Initialize player
     function initPlayer() {
+        renderPlaylists();
         loadSong(currentSongIndex);
-        renderPlaylist();
+        setupAudioVisualizer();
         
         // Event listeners
-        playPauseBtn.addEventListener('click', togglePlay);
+        playBtn.addEventListener('click', togglePlay);
         prevBtn.addEventListener('click', prevSong);
         nextBtn.addEventListener('click', nextSong);
         audioPlayer.addEventListener('timeupdate', updateProgress);
         audioPlayer.addEventListener('ended', handleSongEnd);
         audioPlayer.addEventListener('loadedmetadata', updateDuration);
-        progressBar.addEventListener('click', seek);
-        volumeControl.addEventListener('input', setVolume);
         shuffleBtn.addEventListener('click', toggleShuffle);
         repeatBtn.addEventListener('click', toggleRepeat);
+        
+        // Navigation
+        navItems.forEach(item => {
+            item.addEventListener('click', function() {
+                const sectionId = this.dataset.section + '-section';
+                
+                // Update active nav item
+                navItems.forEach(nav => nav.classList.remove('active'));
+                this.classList.add('active');
+                
+                // Show corresponding section
+                sections.forEach(section => section.classList.remove('active'));
+                document.getElementById(sectionId).classList.add('active');
+            });
+        });
+        
+        // Search functionality
+        searchBar.addEventListener('input', function() {
+            const searchTerm = this.value.toLowerCase();
+            if (searchTerm.length > 0) {
+                const results = songs.filter(song => 
+                    song.title.toLowerCase().includes(searchTerm) || 
+                    song.artist.toLowerCase().includes(searchTerm)
+                );
+                renderSearchResults(results);
+            } else {
+                searchResults.innerHTML = '';
+            }
+        });
     }
-    
+
+    // Render playlists
+    function renderPlaylists() {
+        // Render home playlist (could be a subset or featured songs)
+        homePlaylist.innerHTML = songs.slice(0, 55).map((song, index) => `
+            <div class="song-item" data-index="${index}">
+                <img src="${song.cover}" class="song-cover" alt="${song.title}">
+                <div class="song-info">
+                    <div class="song-title">${song.title}</div>
+                    <div class="song-artist">${song.artist}</div>
+                </div>
+            </div>
+        `).join('');
+        
+        // Render full playlist
+        fullPlaylist.innerHTML = songs.map((song, index) => `
+            <div class="song-item" data-index="${index}">
+                <img src="${song.cover}" class="song-cover" alt="${song.title}">
+                <div class="song-info">
+                    <div class="song-title">${song.title}</div>
+                    <div class="song-artist">${song.artist}</div>
+                </div>
+            </div>
+        `).join('');
+        
+        // Add click handlers to all song items
+        document.querySelectorAll('.song-item').forEach(item => {
+            item.addEventListener('click', function() {
+                currentSongIndex = parseInt(this.dataset.index);
+                playSong();
+            });
+        });
+    }
+
+    // Render search results
+    function renderSearchResults(results) {
+        searchResults.innerHTML = results.map(song => {
+            const index = songs.findIndex(s => s.id === song.id);
+            return `
+                <div class="song-item" data-index="${index}">
+                    <img src="${song.cover}" class="song-cover" alt="${song.title}">
+                    <div class="song-info">
+                        <div class="song-title">${song.title}</div>
+                        <div class="song-artist">${song.artist}</div>
+                    </div>
+                </div>
+            `;
+        }).join('');
+        
+        // Add click handlers to search results
+        document.querySelectorAll('#search-results .song-item').forEach(item => {
+            item.addEventListener('click', function() {
+                currentSongIndex = parseInt(this.dataset.index);
+                playSong();
+            });
+        });
+    }
+
     // Load song
     function loadSong(index) {
         const song = isShuffled ? shuffledPlaylist[index] : songs[index];
         audioPlayer.src = song.file;
-        songTitle.textContent = song.title;
-        songArtist.textContent = song.artist;
-        albumArt.src = song.cover;
-        albumArt.alt = `${song.title} by ${song.artist}`;
+        nowPlayingCover.src = song.cover;
+        nowPlayingCover.alt = song.title;
+        nowPlayingTitle.textContent = song.title;
+        nowPlayingArtist.textContent = song.artist;
+        
+        // Highlight current song in all playlists
+        document.querySelectorAll('.song-item').forEach(item => {
+            item.classList.remove('active');
+        });
+        
+        const playlistIndex = isShuffled ? 
+            shuffledPlaylist.findIndex(s => s.id === song.id) : index;
+        
+        document.querySelectorAll(`.song-item[data-index="${playlistIndex}"]`).forEach(item => {
+            item.classList.add('active');
+        });
     }
-    
+
+    // Play song
+    function playSong() {
+        loadSong(currentSongIndex);
+        audioPlayer.play();
+        isPlaying = true;
+        playBtn.innerHTML = '<i class="fas fa-pause"></i>';
+        setupAudioVisualizer();
+    }
+
     // Toggle play/pause
     function togglePlay() {
         if (isPlaying) {
             audioPlayer.pause();
-            playPauseBtn.innerHTML = '<i class="fas fa-play"></i>';
+            playBtn.innerHTML = '<i class="fas fa-play"></i>';
+            cancelAnimationFrame(animationId);
         } else {
             audioPlayer.play();
-            playPauseBtn.innerHTML = '<i class="fas fa-pause"></i>';
+            playBtn.innerHTML = '<i class="fas fa-pause"></i>';
+            setupAudioVisualizer();
         }
         isPlaying = !isPlaying;
     }
-    
+
     // Previous song
     function prevSong() {
         currentSongIndex--;
@@ -72,7 +189,7 @@ document.addEventListener('DOMContentLoaded', function() {
         }
         playSong();
     }
-    
+
     // Next song
     function nextSong() {
         currentSongIndex++;
@@ -81,16 +198,7 @@ document.addEventListener('DOMContentLoaded', function() {
         }
         playSong();
     }
-    
-    // Play song
-    function playSong() {
-        loadSong(currentSongIndex);
-        audioPlayer.play();
-        isPlaying = true;
-        playPauseBtn.innerHTML = '<i class="fas fa-pause"></i>';
-        highlightCurrentSong();
-    }
-    
+
     // Handle song end
     function handleSongEnd() {
         if (isRepeat) {
@@ -100,33 +208,22 @@ document.addEventListener('DOMContentLoaded', function() {
             nextSong();
         }
     }
-    
+
     // Update progress bar
     function updateProgress() {
         const { currentTime, duration } = audioPlayer;
         const progressPercent = (currentTime / duration) * 100;
-        progressBar.value = progressPercent;
+        progressBar.style.width = `${progressPercent}%`;
         
         // Update time display
         currentTimeEl.textContent = formatTime(currentTime);
     }
-    
+
     // Update duration
     function updateDuration() {
         durationEl.textContent = formatTime(audioPlayer.duration);
     }
-    
-    // Seek in song
-    function seek(e) {
-        const seekTime = (e.offsetX / progressBar.clientWidth) * audioPlayer.duration;
-        audioPlayer.currentTime = seekTime;
-    }
-    
-    // Set volume
-    function setVolume() {
-        audioPlayer.volume = volumeControl.value;
-    }
-    
+
     // Toggle shuffle
     function toggleShuffle() {
         isShuffled = !isShuffled;
@@ -143,54 +240,67 @@ document.addEventListener('DOMContentLoaded', function() {
             currentSongIndex = songs.findIndex(song => song.id === currentSong.id);
         }
     }
-    
+
     // Toggle repeat
     function toggleRepeat() {
         isRepeat = !isRepeat;
         repeatBtn.classList.toggle('active', isRepeat);
     }
-    
+
     // Format time (seconds to MM:SS)
     function formatTime(seconds) {
         const minutes = Math.floor(seconds / 60);
         const secs = Math.floor(seconds % 60);
         return `${minutes}:${secs < 10 ? '0' : ''}${secs}`;
     }
-    
-    // Render playlist
-    function renderPlaylist() {
-        playlistContainer.innerHTML = '';
-        const playlistToRender = isShuffled ? shuffledPlaylist : songs;
+
+    // Audio visualizer setup
+    function setupAudioVisualizer() {
+        if (audioContext) {
+            audioContext.close();
+        }
         
-        playlistToRender.forEach((song, index) => {
-            const songElement = document.createElement('div');
-            songElement.className = `playlist-song ${index === currentSongIndex ? 'active' : ''}`;
-            songElement.dataset.index = index;
-            songElement.innerHTML = `
-                <img src="${song.cover}" alt="${song.title}" class="playlist-song-cover">
-                <div class="playlist-song-info">
-                    <h4>${song.title}</h4>
-                    <p>${song.artist}</p>
-                </div>
-            `;
-            
-            songElement.addEventListener('click', () => {
-                currentSongIndex = index;
-                playSong();
-            });
-            
-            playlistContainer.appendChild(songElement);
-        });
+        audioContext = new (window.AudioContext || window.webkitAudioContext)();
+        analyser = audioContext.createAnalyser();
+        analyser.fftSize = 256;
+        
+        const source = audioContext.createMediaElementSource(audioPlayer);
+        source.connect(analyser);
+        analyser.connect(audioContext.destination);
+        
+        dataArray = new Uint8Array(analyser.frequencyBinCount);
+        
+        // Start visualization
+        drawVisualizer();
     }
-    
-    // Highlight current song in playlist
-    function highlightCurrentSong() {
-        const playlistSongs = document.querySelectorAll('.playlist-song');
-        playlistSongs.forEach((song, index) => {
-            song.classList.toggle('active', index === currentSongIndex);
-        });
+
+    // Draw audio visualizer
+    function drawVisualizer() {
+        if (!isPlaying) return;
+        
+        animationId = requestAnimationFrame(drawVisualizer);
+        analyser.getByteFrequencyData(dataArray);
+        
+        visualizerCtx.clearRect(0, 0, visualizerCanvas.width, visualizerCanvas.height);
+        
+        const barWidth = (visualizerCanvas.width / dataArray.length) * 2.5;
+        let x = 0;
+        
+        for (let i = 0; i < dataArray.length; i++) {
+            const barHeight = (dataArray[i] / 255) * visualizerCanvas.height;
+            
+            visualizerCtx.fillStyle = `rgb(${barHeight + 100}, 50, 50)`;
+            visualizerCtx.fillRect(
+                x, 
+                visualizerCanvas.height - barHeight, 
+                barWidth, 
+                barHeight
+            );
+            
+            x += barWidth + 1;
+        }
     }
-    
+
     // Initialize the player
     initPlayer();
 });
