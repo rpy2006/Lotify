@@ -5,7 +5,7 @@ const songs = [
         title: "Blinding Lights",
         artist: "The Weeknd",
         cover: "https://i.scdn.co/image/ab67616d00001e02b1c4b76e23414c9f20242268",
-        file: "/music/SpotiDownloader.com - Blinding Lights - The Weeknd.mp3"
+        file: "music/SpotiDownloader.com - Blinding Lights - The Weeknd.mp3"
     },
     {
         id: 2,
